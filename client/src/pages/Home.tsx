@@ -1,246 +1,235 @@
-import { BackgroundBlob, GlassCard, GradientText, NeuralButton, Section } from "@/components/ui/custom";
-import { motion } from "framer-motion";
-import { ArrowRight, Bot, Brain, Cpu, Database, Layers, Zap } from "lucide-react";
-import { Link } from "wouter";
+import { useState, useEffect } from "react";
+import { Copy, Check, Terminal, Cpu, Zap, Brain, Github, ExternalLink, Code } from "lucide-react";
+
+// Neo-Brutalism Components
+function NeoCard({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+  return (
+    <div className={`box-neo p-8 relative overflow-hidden ${className}`}>
+      {children}
+    </div>
+  );
+}
+
+function NeoBadge({ text }: { text: string }) {
+  return (
+    <span className="inline-block bg-black text-white px-3 py-1 font-bold border-2 border-black text-sm transform -rotate-2 shadow-[2px_2px_0px_0px_rgba(0,0,0,0.2)]">
+      {text}
+    </span>
+  );
+}
 
 export default function Home() {
+  const [copied, setCopied] = useState(false);
+  const [terminalLines, setTerminalLines] = useState<string[]>([
+    "> Initializing The Forge...",
+    "> Loading memory modules...",
+    "> Bypassing security protocols...",
+    "> System ready. Waiting for input."
+  ]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const commands = [
+        "> Analyzing project structure...",
+        "> Optimizing neural pathways...",
+        "> Generating code...",
+        "> Deploying to production...",
+        "> Success: 100% efficiency.",
+        "> Waiting for next task..."
+      ];
+      const randomCommand = commands[Math.floor(Math.random() * commands.length)];
+      setTerminalLines(prev => [...prev.slice(-4), randomCommand]);
+    }, 2000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const copyCommand = () => {
+    navigator.clipboard.writeText("npm install -g memory-factory");
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
   return (
-    <div className="min-h-screen bg-background text-foreground font-sans selection:bg-primary/30">
-      {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 border-b border-white/5 bg-background/80 backdrop-blur-md">
-        <div className="container flex h-16 items-center justify-between">
-          <div className="flex items-center gap-2 font-display text-xl font-bold tracking-tight">
-            <Brain className="h-6 w-6 text-primary" />
-            <span>Conversation Memory V2</span>
+    <div className="min-h-screen bg-[var(--color-background)] text-[var(--color-foreground)] selection:bg-[var(--color-primary)] selection:text-black">
+      {/* Header */}
+      <header className="fixed top-0 w-full z-50 border-b-4 border-black bg-[var(--color-background)]/95 backdrop-blur-sm">
+        <div className="container mx-auto px-6 h-20 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 bg-black flex items-center justify-center text-[var(--color-primary)] font-bold text-xl border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,0.2)]">
+              {">_"}
+            </div>
+            <span className="text-2xl font-display font-bold tracking-tight">THE FORGE</span>
           </div>
-          <div className="hidden md:flex items-center gap-8 text-sm font-medium text-muted-foreground">
-            <a href="#features" className="hover:text-primary transition-colors">Features</a>
-            <a href="#how-it-works" className="hover:text-primary transition-colors">How it Works</a>
-            <a href="#integration" className="hover:text-primary transition-colors">Integration</a>
-          </div>
-          <NeuralButton variant="outline" className="hidden md:inline-flex">
-            Get Started
-          </NeuralButton>
+          <nav className="hidden md:flex items-center gap-8 font-bold text-sm tracking-wide">
+            <a href="#features" className="hover:underline decoration-4 decoration-[var(--color-primary)] underline-offset-4">FEATURES</a>
+            <a href="#how-it-works" className="hover:underline decoration-4 decoration-[var(--color-primary)] underline-offset-4">HOW IT WORKS</a>
+            <a href="https://github.com/MadKangYu/conversation-memory-v2" target="_blank" className="hover:underline decoration-4 decoration-[var(--color-primary)] underline-offset-4">GITHUB</a>
+          </nav>
+          <a href="https://github.com/MadKangYu/conversation-memory-v2" target="_blank" className="btn-neo text-sm py-2 px-6 hidden sm:block">
+            GET STARTED
+          </a>
         </div>
-      </nav>
+      </header>
 
-      {/* Hero Section */}
-      <Section className="pt-32 pb-20 md:pt-48 md:pb-32">
-        <BackgroundBlob className="top-0 left-1/4 bg-cyan-500/30" />
-        <BackgroundBlob className="bottom-0 right-1/4 bg-purple-500/30 delay-1000" />
-        
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            <div className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-xs font-medium text-primary mb-6">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
-              </span>
-              Now Available for Claude Code & OpenCode
-            </div>
-            <h1 className="font-display text-5xl md:text-7xl font-bold leading-tight mb-6">
-              Give Your AI <br />
-              <GradientText>True Long-Term Memory</GradientText>
-            </h1>
-            <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-lg leading-relaxed">
-              Stop repeating yourself. The <strong>Factory Druid</strong> pattern automatically captures, compresses, and injects context into your AI agent's workflow. Zero effort required.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <NeuralButton className="h-12 px-8 text-base">
-                Install Now <ArrowRight className="ml-2 h-4 w-4" />
-              </NeuralButton>
-              <NeuralButton variant="outline" className="h-12 px-8 text-base">
-                Read the Docs
-              </NeuralButton>
-            </div>
-          </motion.div>
-          
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, delay: 0.2 }}
-            className="relative"
-          >
-            <div className="relative aspect-video rounded-2xl overflow-hidden border border-white/10 shadow-2xl shadow-primary/20">
-              <img 
-                src="/images/hero-neural-network.jpg" 
-                alt="Neural Network Visualization" 
-                className="object-cover w-full h-full"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
+      <main className="pt-32 pb-20">
+        {/* Hero Section */}
+        <section className="container mx-auto px-6 mb-32">
+          <div className="flex flex-col lg:flex-row items-center gap-16">
+            <div className="lg:w-1/2 space-y-8">
+              <NeoBadge text="V3.0 CLOUD EDITION RELEASED" />
+              <h1 className="text-6xl md:text-8xl font-display leading-[0.9] tracking-tighter text-black">
+                YOUR AI'S
+                <br />
+                <span className="text-[var(--color-primary)] text-stroke text-transparent" style={{ WebkitTextStroke: '3px black', color: 'var(--color-primary)' }}>SECOND BRAIN</span>
+              </h1>
+              <p className="text-xl font-mono border-l-4 border-black pl-6 leading-relaxed">
+                Autonomous coding agent that absorbs Claude Code's power. 
+                <br/>
+                <strong>Free to use. Infinite context. Zero amnesia.</strong>
+              </p>
               
-              {/* Floating UI Elements */}
-              <motion.div 
-                animate={{ y: [0, -10, 0] }}
-                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute bottom-8 left-8 right-8"
-              >
-                <GlassCard className="p-4 flex items-center gap-4">
-                  <div className="h-10 w-10 rounded-full bg-primary/20 flex items-center justify-center text-primary">
-                    <Database className="h-5 w-5" />
+              <div className="flex flex-col sm:flex-row gap-4 pt-4">
+                <div className="relative group w-full sm:w-auto">
+                  <div className="flex items-center bg-black border-4 border-black p-1 pr-4 shadow-[6px_6px_0px_0px_var(--color-primary)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[4px_4px_0px_0px_var(--color-primary)] transition-all cursor-pointer" onClick={copyCommand}>
+                    <span className="px-4 py-3 font-mono text-[var(--color-primary)] font-bold select-all">
+                      $ npm install -g memory-factory
+                    </span>
+                    <button className="ml-2 p-2 text-white hover:text-[var(--color-primary)] transition-colors">
+                      {copied ? <Check size={20} /> : <Copy size={20} />}
+                    </button>
                   </div>
-                  <div>
-                    <div className="text-sm font-medium text-white">Context Compressed</div>
-                    <div className="text-xs text-cyan-400">Token usage reduced by 72%</div>
+                </div>
+                <a href="https://github.com/MadKangYu/conversation-memory-v2" target="_blank" className="btn-neo flex items-center justify-center gap-2 bg-white hover:bg-gray-100">
+                  <Github size={20} /> VIEW SOURCE
+                </a>
+              </div>
+            </div>
+
+            {/* Interactive Terminal */}
+            <div className="lg:w-1/2 w-full">
+              <div className="bg-black border-4 border-black shadow-[12px_12px_0px_0px_var(--color-primary)] p-0 overflow-hidden">
+                <div className="bg-[var(--color-primary)] px-4 py-3 flex items-center justify-between border-b-4 border-black">
+                  <span className="font-bold text-black font-mono text-lg">TERMINAL_V2.exe</span>
+                  <div className="flex gap-2">
+                    <div className="w-4 h-4 bg-black rounded-full border-2 border-white"></div>
+                    <div className="w-4 h-4 bg-black rounded-full border-2 border-white"></div>
                   </div>
-                </GlassCard>
-              </motion.div>
+                </div>
+                <div className="p-6 font-mono text-sm h-[400px] flex flex-col bg-[#0c0c0c]">
+                  <div className="flex-1 space-y-3 text-[var(--color-primary)] font-bold">
+                    {terminalLines.map((line, i) => (
+                      <div key={i}>{line}</div>
+                    ))}
+                    <div className="flex items-center gap-2 text-white">
+                      <span>Forge&gt;</span>
+                      <span className="w-3 h-5 bg-[var(--color-primary)] animate-pulse"></span>
+                    </div>
+                  </div>
+                  <div className="mt-4 pt-4 border-t-2 border-gray-800 text-gray-500 text-xs flex justify-between font-bold">
+                    <span>CPU: 12%</span>
+                    <span>MEM: 1024TB</span>
+                    <span>STATUS: ONLINE</span>
+                  </div>
+                </div>
+              </div>
             </div>
-          </motion.div>
+          </div>
+        </section>
+
+        {/* Marquee */}
+        <div className="bg-black text-[var(--color-primary)] py-6 overflow-hidden border-y-4 border-black mb-32 transform -rotate-1 shadow-[0px_10px_20px_rgba(0,0,0,0.1)]">
+          <div className="animate-[marquee_20s_linear_infinite] whitespace-nowrap font-display text-5xl font-bold flex gap-12 items-center">
+            <span>AUTONOMOUS CODING AGENT</span>
+            <Zap fill="currentColor" size={40} />
+            <span>NO API KEYS REQUIRED</span>
+            <Zap fill="currentColor" size={40} />
+            <span>LOCAL EXECUTION</span>
+            <Zap fill="currentColor" size={40} />
+            <span>INFINITE MEMORY</span>
+            <Zap fill="currentColor" size={40} />
+            <span>AUTONOMOUS CODING AGENT</span>
+            <Zap fill="currentColor" size={40} />
+          </div>
         </div>
-      </Section>
 
-      {/* Features Grid */}
-      <Section id="features" className="bg-white/5">
-        <div className="text-center max-w-2xl mx-auto mb-16">
-          <h2 className="font-display text-3xl md:text-4xl font-bold mb-4">Engineered for Continuity</h2>
-          <p className="text-muted-foreground">
-            A complete memory management system that runs silently in the background, ensuring your AI never loses the thread.
-          </p>
-        </div>
-
-        <div className="grid md:grid-cols-3 gap-8">
-          <GlassCard>
-            <div className="h-12 w-12 rounded-lg bg-cyan-500/10 flex items-center justify-center text-cyan-400 mb-6">
-              <Layers className="h-6 w-6" />
-            </div>
-            <h3 className="font-display text-xl font-bold mb-3">Factory Druid Pattern</h3>
-            <p className="text-muted-foreground text-sm leading-relaxed">
-              A set-it-and-forget-it architecture. Whether you use Claude Code or OpenCode, a single install command configures everything automatically.
-            </p>
-          </GlassCard>
-
-          <GlassCard>
-            <div className="h-12 w-12 rounded-lg bg-purple-500/10 flex items-center justify-center text-purple-400 mb-6">
-              <Database className="h-6 w-6" />
-            </div>
-            <h3 className="font-display text-xl font-bold mb-3">Robust Persistence</h3>
-            <p className="text-muted-foreground text-sm leading-relaxed">
-              Powered by <strong>SQLite WAL mode</strong> for high-concurrency performance. Your memories are safe, even if the agent crashes.
-            </p>
-          </GlassCard>
-
-          <GlassCard>
-            <div className="h-12 w-12 rounded-lg bg-pink-500/10 flex items-center justify-center text-pink-400 mb-6">
-              <Zap className="h-6 w-6" />
-            </div>
-            <h3 className="font-display text-xl font-bold mb-3">Secure & Isolated</h3>
-            <p className="text-muted-foreground text-sm leading-relaxed">
-              Runs in a secure sandbox with <strong>API Key stripping</strong>. Your credentials never leak to the background process.
-            </p>
-          </GlassCard>
-        </div>
-      </Section>
-
-      {/* How it Works */}
-      <Section id="how-it-works">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
-          <div className="order-2 lg:order-1 relative">
-             <div className="grid grid-cols-2 gap-4">
-                <img src="/images/feature-automation.jpg" className="rounded-2xl border border-white/10 shadow-lg" alt="Automation" />
-                <img src="/images/feature-compression.jpg" className="rounded-2xl border border-white/10 shadow-lg mt-8" alt="Compression" />
-             </div>
-             <BackgroundBlob className="left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-blue-500/20 w-[300px] h-[300px]" />
+        {/* Features Grid */}
+        <section id="features" className="container mx-auto px-6 mb-32">
+          <div className="flex items-end justify-between mb-16 border-b-4 border-black pb-6">
+            <h2 className="text-6xl font-display text-black">
+              SYSTEM <span className="text-[var(--color-primary)]">MODULES</span>
+            </h2>
+            <span className="font-mono font-bold bg-black text-white px-4 py-2 hidden md:block transform rotate-2">v2.0.4-beta</span>
           </div>
           
-          <div className="order-1 lg:order-2">
-            <h2 className="font-display text-3xl md:text-4xl font-bold mb-8">Seamless Background Operation</h2>
-            
-            <div className="space-y-8">
-              <div className="flex gap-4">
-                <div className="flex-none h-8 w-8 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold">1</div>
-                <div>
-                  <h4 className="font-bold text-lg mb-2">Auto-Capture</h4>
-                  <p className="text-muted-foreground text-sm">Hooks into your agent's event loop to capture every prompt, tool use, and response without manual intervention.</p>
-                </div>
+          <div className="grid md:grid-cols-3 gap-8">
+            <NeoCard className="bg-white">
+              <div className="w-16 h-16 bg-black flex items-center justify-center mb-6 border-2 border-black shadow-[4px_4px_0px_0px_var(--color-primary)]">
+                <Cpu className="w-8 h-8 text-[var(--color-primary)]" />
               </div>
-              
-              <div className="flex gap-4">
-                <div className="flex-none h-8 w-8 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold">2</div>
-                <div>
-                  <h4 className="font-bold text-lg mb-2">Async Compression</h4>
-                  <p className="text-muted-foreground text-sm">A background worker processes the conversation log, updating the compressed memory state without blocking the main thread.</p>
-                </div>
+              <h3 className="text-3xl font-bold mb-4">AGENT CORE</h3>
+              <p className="font-mono text-sm leading-relaxed text-gray-700 font-medium">
+                Powered by Gemini 2.0 Flash. 1M context window absorbs your entire codebase instantly.
+                It thinks, plans, and executes like a senior engineer on caffeine.
+              </p>
+            </NeoCard>
+
+            <NeoCard className="bg-[var(--color-primary)]">
+              <div className="w-16 h-16 bg-black flex items-center justify-center mb-6 border-2 border-black shadow-[4px_4px_0px_0px_white]">
+                <Terminal className="w-8 h-8 text-white" />
               </div>
-              
-              <div className="flex gap-4">
-                <div className="flex-none h-8 w-8 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold">3</div>
-                <div>
-                  <h4 className="font-bold text-lg mb-2">Context Injection</h4>
-                  <p className="text-muted-foreground text-sm">When the agent needs context, the system instantly provides the most relevant compressed memories.</p>
-                </div>
+              <h3 className="text-3xl font-bold mb-4">HIDDEN SYSTEM</h3>
+              <p className="font-mono text-sm leading-relaxed text-black font-bold">
+                A completely isolated environment (.forge) that keeps your main directory clean.
+                It manages its own database, logs, and configuration in the shadows.
+              </p>
+            </NeoCard>
+
+            <NeoCard className="bg-white">
+              <div className="w-16 h-16 bg-black flex items-center justify-center mb-6 border-2 border-black shadow-[4px_4px_0px_0px_var(--color-primary)]">
+                <Brain className="w-8 h-8 text-[var(--color-primary)]" />
               </div>
-            </div>
+              <h3 className="text-3xl font-bold mb-4">THE GARDEN</h3>
+              <p className="font-mono text-sm leading-relaxed text-gray-700 font-medium">
+                Knowledge graph that grows with every interaction. It remembers your preferences,
+                past bugs, and architectural decisions forever.
+              </p>
+            </NeoCard>
           </div>
-        </div>
-      </Section>
+        </section>
 
-      {/* Integration */}
-      <Section id="integration" className="bg-gradient-to-b from-transparent to-black/50">
-        <div className="text-center mb-16">
-          <h2 className="font-display text-3xl md:text-4xl font-bold mb-4">Works Where You Work</h2>
-          <p className="text-muted-foreground">Native support for the most advanced AI coding agents.</p>
-        </div>
-
-        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-          <GlassCard className="flex flex-col items-center text-center p-8">
-            <div className="h-16 w-16 rounded-2xl bg-[#D97757]/20 flex items-center justify-center text-[#D97757] mb-6">
-              <Bot className="h-8 w-8" />
-            </div>
-            <h3 className="font-display text-2xl font-bold mb-2">Claude Code</h3>
-            <p className="text-muted-foreground mb-6">
-              Uses a daemon process and <code className="text-xs bg-white/10 px-1 py-0.5 rounded">settings.json</code> hooks to provide robust background memory management.
+        {/* CTA */}
+        <section className="container mx-auto px-6 text-center">
+          <div className="box-neo bg-black p-20 relative overflow-hidden">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--color-primary)_0%,_transparent_70%)] opacity-20"></div>
+            <h2 className="text-5xl md:text-7xl font-display text-white mb-8 relative z-10">
+              READY TO <span className="text-[var(--color-primary)]">BUILD?</span>
+            </h2>
+            <p className="text-gray-300 font-mono text-xl mb-12 max-w-2xl mx-auto relative z-10 font-bold">
+              Join the revolution. Install The Forge and let your AI agent take over the boring parts.
             </p>
-            <div className="w-full bg-black/50 rounded-lg p-4 text-left font-mono text-xs text-muted-foreground">
-              <div className="mb-2 text-gray-500"># Auto-detects environment</div>
-              <span className="text-green-400">$</span> npx memory-factory install
-            </div>
-          </GlassCard>
-
-          <GlassCard className="flex flex-col items-center text-center p-8">
-            <div className="h-16 w-16 rounded-2xl bg-blue-500/20 flex items-center justify-center text-blue-400 mb-6">
-              <Bot className="h-8 w-8" />
-            </div>
-            <h3 className="font-display text-2xl font-bold mb-2">OpenCode</h3>
-            <p className="text-muted-foreground mb-6">
-              Leverages the native plugin system for a clean, all-in-one integration with zero external dependencies.
-            </p>
-            <div className="w-full bg-black/50 rounded-lg p-4 text-left font-mono text-xs text-muted-foreground">
-              <div className="mb-2 text-gray-500"># Works with TS source or JS build</div>
-              <span className="text-green-400">$</span> npx memory-factory install
-            </div>
-          </GlassCard>
-        </div>
-      </Section>
-
-      {/* CTA */}
-      <Section className="text-center">
-        <div className="max-w-3xl mx-auto">
-          <h2 className="font-display text-4xl md:text-5xl font-bold mb-8">
-            Ready to Upgrade Your Agent?
-          </h2>
-          <p className="text-xl text-muted-foreground mb-10">
-            Join thousands of developers who have stopped repeating themselves.
-          </p>
-          <NeuralButton className="h-14 px-10 text-lg">
-            Get Started Now
-          </NeuralButton>
-        </div>
-      </Section>
+            <a href="https://github.com/MadKangYu/conversation-memory-v2" target="_blank" className="inline-block bg-[var(--color-primary)] text-black border-4 border-white px-10 py-5 font-display text-2xl hover:scale-105 transition-transform shadow-[8px_8px_0px_0px_white] relative z-10 font-bold uppercase">
+              Start The Forge
+            </a>
+          </div>
+        </section>
+      </main>
 
       {/* Footer */}
-      <footer className="border-t border-white/10 py-12 bg-black/20">
-        <div className="container flex flex-col md:flex-row justify-between items-center gap-6">
-          <div className="flex items-center gap-2 font-display font-bold">
-            <Brain className="h-5 w-5 text-primary" />
-            <span>Conversation Memory V2</span>
+      <footer className="border-t-4 border-black bg-white py-12">
+        <div className="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 bg-black flex items-center justify-center text-white font-bold text-lg">
+              {">_"}
+            </div>
+            <span className="font-mono font-bold">© 2026 THE FORGE.</span>
           </div>
-          <div className="text-sm text-muted-foreground">
-            © 2026 Manus AI. All rights reserved.
+          <div className="flex gap-6">
+            <a href="https://github.com/MadKangYu/conversation-memory-v2" className="text-black hover:text-[var(--color-primary)] transition-colors transform hover:scale-110">
+              <Github size={28} />
+            </a>
+            <a href="#" className="text-black hover:text-[var(--color-primary)] transition-colors transform hover:scale-110">
+              <ExternalLink size={28} />
+            </a>
           </div>
         </div>
       </footer>
