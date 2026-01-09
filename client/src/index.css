@@ -1,19 +1,22 @@
 @import "tailwindcss";
 
 @theme {
-  --color-background: #F0FDF4; /* Very Light Green */
-  --color-foreground: #052e16; /* Dark Green Text */
-  --color-primary: #22c55e; /* Vibrant Green */
-  --color-secondary: #000000; /* Black for Borders */
-  --color-accent: #facc15; /* Yellow Accent */
-  --color-border: #000000;
+  --color-background: #050505; /* Deep Abyss Black */
+  --color-foreground: #e0e0e0; /* Metallic Silver */
+  --color-primary: #39FF14; /* Toxic Neon Green */
+  --color-secondary: #00F0FF; /* Hextech Cyan */
+  --color-accent: #FF0099; /* Jinx Pink */
+  --color-border: #1a1a1a; /* Dark Metal */
   
   --font-display: "Chakra Petch", sans-serif;
   --font-body: "JetBrains Mono", monospace;
 
-  --animate-marquee: marquee 20s linear infinite;
-  --keyframes-marquee: {
-    to { transform: translateX(-100%); }
+  --animate-pulse-fast: pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --animate-glitch: glitch 1s linear infinite;
+  --keyframes-glitch: {
+    2%, 64% { transform: translate(2px,0) skew(0deg); }
+    4%, 60% { transform: translate(-2px,0) skew(0deg); }
+    62% { transform: translate(0,0) skew(5deg); }
   }
 }
 
@@ -23,49 +26,76 @@
     color: var(--color-foreground);
     font-family: var(--font-body);
     overflow-x: hidden;
+    background-image: 
+      linear-gradient(rgba(57, 255, 20, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(57, 255, 20, 0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
   }
   
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-display);
     font-weight: 700;
     text-transform: uppercase;
+    letter-spacing: 0.05em;
   }
 }
 
 @layer utilities {
-  .box-neo {
-    background-color: white;
-    border: 3px solid var(--color-border);
-    box-shadow: 6px 6px 0px 0px var(--color-border);
-    transition: all 0.2s ease-in-out;
+  .box-hextech {
+    background-color: rgba(10, 10, 10, 0.8);
+    border: 1px solid var(--color-primary);
+    box-shadow: 0 0 10px rgba(57, 255, 20, 0.2), inset 0 0 20px rgba(57, 255, 20, 0.05);
+    backdrop-filter: blur(10px);
+    clip-path: polygon(
+      0 0, 
+      100% 0, 
+      100% calc(100% - 20px), 
+      calc(100% - 20px) 100%, 
+      0 100%
+    );
+    transition: all 0.3s ease;
   }
   
-  .box-neo:hover {
-    transform: translate(-2px, -2px);
-    box-shadow: 8px 8px 0px 0px var(--color-border);
+  .box-hextech:hover {
+    box-shadow: 0 0 20px rgba(57, 255, 20, 0.4), inset 0 0 30px rgba(57, 255, 20, 0.1);
+    border-color: #fff;
   }
   
-  .btn-neo {
-    @apply px-6 py-3 font-bold text-black transition-all duration-200 uppercase tracking-wider cursor-pointer;
-    background-color: var(--color-primary);
-    border: 3px solid var(--color-border);
-    box-shadow: 4px 4px 0px 0px var(--color-border);
+  .btn-hextech {
+    @apply px-8 py-4 font-bold text-black transition-all duration-300 uppercase tracking-widest cursor-pointer relative overflow-hidden;
+    background: var(--color-primary);
     font-family: var(--font-display);
+    clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
   }
   
-  .btn-neo:hover {
-    transform: translate(-2px, -2px);
-    box-shadow: 6px 6px 0px 0px var(--color-border);
-    background-color: #4ade80; /* Lighter Green */
+  .btn-hextech::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.8), transparent);
+    transition: 0.5s;
   }
   
-  .btn-neo:active {
-    transform: translate(2px, 2px);
-    box-shadow: 2px 2px 0px 0px var(--color-border);
+  .btn-hextech:hover::before {
+    left: 100%;
+  }
+  
+  .btn-hextech:hover {
+    background-color: #fff;
+    box-shadow: 0 0 30px var(--color-primary);
+    text-shadow: 0 0 10px rgba(57, 255, 20, 0.5);
   }
 
-  .text-stroke {
-    -webkit-text-stroke: 2px var(--color-border);
-    color: transparent;
+  .text-neon {
+    color: var(--color-primary);
+    text-shadow: 0 0 10px rgba(57, 255, 20, 0.8), 0 0 20px rgba(57, 255, 20, 0.4);
+  }
+  
+  .border-neon {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 10px rgba(57, 255, 20, 0.5);
   }
 }

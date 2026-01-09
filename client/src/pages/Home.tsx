@@ -1,20 +1,20 @@
-import { useState, useEffect } from "react";
-import { Copy, Check, Terminal, Cpu, Zap, Brain, Github, ExternalLink, Code } from "lucide-react";
+import React, { useState, useEffect } from 'react';
+import { HextechCard, HextechButton, HextechBadge } from '@/components/ui/hextech';
+import { Terminal, Cpu, Zap, Brain, Github, Copy, Check } from 'lucide-react';
 
-// Neo-Brutalism Components
-function NeoCard({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+function FeatureCard({ icon, title, description }: { icon: React.ReactNode, title: string, description: string }) {
   return (
-    <div className={`box-neo p-8 relative overflow-hidden ${className}`}>
-      {children}
-    </div>
-  );
-}
-
-function NeoBadge({ text }: { text: string }) {
-  return (
-    <span className="inline-block bg-black text-white px-3 py-1 font-bold border-2 border-black text-sm transform -rotate-2 shadow-[2px_2px_0px_0px_rgba(0,0,0,0.2)]">
-      {text}
-    </span>
+    <HextechCard className="h-full flex flex-col items-start gap-4 bg-black/50 backdrop-blur-sm border border-primary/30 hover:border-primary transition-colors group">
+      <div className="p-3 bg-primary/10 rounded-none border border-primary/50 text-primary shadow-[0_0_15px_rgba(57,255,20,0.3)] group-hover:shadow-[0_0_25px_rgba(57,255,20,0.6)] transition-all duration-500 relative overflow-hidden">
+        {icon}
+        {/* Particle Effect on Hover */}
+        <div className="absolute inset-0 bg-primary/20 translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
+      </div>
+      <h3 className="text-xl font-bold text-white font-display tracking-wider uppercase group-hover:text-primary transition-colors">{title}</h3>
+      <p className="text-gray-400 font-mono text-sm leading-relaxed">
+        {description}
+      </p>
+    </HextechCard>
   );
 }
 
@@ -29,17 +29,17 @@ export default function Home() {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      const commands = [
+      const newLines = [
         "> Analyzing project structure...",
         "> Optimizing neural pathways...",
-        "> Generating code...",
-        "> Deploying to production...",
-        "> Success: 100% efficiency.",
-        "> Waiting for next task..."
+        "> Generating solution matrix...",
+        "> Executing Phase 1...",
+        "> Compiling assets...",
+        "> Deployment sequence initiated..."
       ];
-      const randomCommand = commands[Math.floor(Math.random() * commands.length)];
-      setTerminalLines(prev => [...prev.slice(-4), randomCommand]);
-    }, 2000);
+      const randomLine = newLines[Math.floor(Math.random() * newLines.length)];
+      setTerminalLines(prev => [...prev.slice(-5), randomLine]);
+    }, 2500);
     return () => clearInterval(interval);
   }, []);
 
@@ -50,86 +50,136 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-[var(--color-background)] text-[var(--color-foreground)] selection:bg-[var(--color-primary)] selection:text-black">
+    <div className="min-h-screen bg-[#050505] text-gray-200 selection:bg-primary selection:text-black overflow-x-hidden relative">
+      {/* Hextech Background Gears Animation */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden">
+        {/* Big Gear Top Right */}
+        <div className="absolute -top-20 -right-20 w-[500px] h-[500px] opacity-10 animate-[spin_60s_linear_infinite]">
+          <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" className="text-primary w-full h-full">
+            <path d="M50 50 m-40 0 a 40 40 0 1 0 80 0 a 40 40 0 1 0 -80 0" strokeWidth="1" />
+            <path d="M50 50 m-30 0 a 30 30 0 1 0 60 0 a 30 30 0 1 0 -60 0" strokeWidth="2" strokeDasharray="5 5" />
+            <path d="M50 10 L50 0 M90 50 L100 50 M50 90 L50 100 M10 50 L0 50" strokeWidth="4" />
+            <circle cx="50" cy="50" r="10" strokeWidth="1" />
+          </svg>
+        </div>
+        {/* Small Gear Bottom Left */}
+        <div className="absolute -bottom-20 -left-20 w-[300px] h-[300px] opacity-10 animate-[spin_40s_linear_infinite_reverse]">
+          <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" className="text-primary w-full h-full">
+            <path d="M50 50 m-35 0 a 35 35 0 1 0 70 0 a 35 35 0 1 0 -70 0" strokeWidth="1" />
+            <path d="M50 50 m-25 0 a 25 25 0 1 0 50 0 a 25 25 0 1 0 -50 0" strokeWidth="2" strokeDasharray="3 3" />
+            <rect x="45" y="0" width="10" height="100" />
+            <rect x="0" y="45" width="100" height="10" />
+          </svg>
+        </div>
+      </div>
+
+      {/* Background Grid */}
+      <div className="fixed inset-0 pointer-events-none opacity-20" 
+           style={{ 
+             backgroundImage: 'linear-gradient(rgba(57, 255, 20, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(57, 255, 20, 0.1) 1px, transparent 1px)', 
+             backgroundSize: '50px 50px',
+             maskImage: 'radial-gradient(circle at center, black 40%, transparent 100%)'
+           }}>
+      </div>
+
       {/* Header */}
-      <header className="fixed top-0 w-full z-50 border-b-4 border-black bg-[var(--color-background)]/95 backdrop-blur-sm">
+      <header className="fixed top-0 w-full z-50 border-b border-primary/20 bg-black/80 backdrop-blur-md">
         <div className="container mx-auto px-6 h-20 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-black flex items-center justify-center text-[var(--color-primary)] font-bold text-xl border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,0.2)]">
-              {">_"}
+          <div className="flex items-center gap-3 group cursor-pointer">
+            <div className="w-10 h-10 bg-primary flex items-center justify-center text-black font-bold text-xl shadow-[0_0_20px_rgba(57,255,20,0.6)] clip-path-polygon-[10px_0,100%_0,100%_calc(100%-10px),calc(100%-10px)_100%,0_100%,0_10px] group-hover:rotate-180 transition-transform duration-700">
+              <Zap size={24} fill="black" />
             </div>
-            <span className="text-2xl font-display font-bold tracking-tight">THE FORGE</span>
+            <span className="font-display font-bold text-2xl tracking-widest text-white group-hover:text-primary transition-colors">THE FORGE</span>
           </div>
-          <nav className="hidden md:flex items-center gap-8 font-bold text-sm tracking-wide">
-            <a href="#features" className="hover:underline decoration-4 decoration-[var(--color-primary)] underline-offset-4">FEATURES</a>
-            <a href="#how-it-works" className="hover:underline decoration-4 decoration-[var(--color-primary)] underline-offset-4">HOW IT WORKS</a>
-            <a href="https://github.com/MadKangYu/conversation-memory-v2" target="_blank" className="hover:underline decoration-4 decoration-[var(--color-primary)] underline-offset-4">GITHUB</a>
+          
+          <nav className="hidden md:flex items-center gap-8 font-mono text-sm text-primary/80">
+            <a href="#features" className="hover:text-primary hover:shadow-[0_0_10px_rgba(57,255,20,0.8)] transition-all">FEATURES</a>
+            <a href="#how-it-works" className="hover:text-primary hover:shadow-[0_0_10px_rgba(57,255,20,0.8)] transition-all">HOW IT WORKS</a>
+            <a href="https://github.com/MadKangYu/conversation-memory-v2" target="_blank" className="hover:text-primary hover:shadow-[0_0_10px_rgba(57,255,20,0.8)] transition-all">GITHUB</a>
           </nav>
-          <a href="https://github.com/MadKangYu/conversation-memory-v2" target="_blank" className="btn-neo text-sm py-2 px-6 hidden sm:block">
+
+          <HextechButton className="hidden md:block text-sm px-6 py-2">
             GET STARTED
-          </a>
+          </HextechButton>
         </div>
       </header>
 
-      <main className="pt-32 pb-20">
+      <main className="pt-32 pb-20 relative z-10">
         {/* Hero Section */}
         <section className="container mx-auto px-6 mb-32">
-          <div className="flex flex-col lg:flex-row items-center gap-16">
-            <div className="lg:w-1/2 space-y-8">
-              <NeoBadge text="V3.0 CLOUD EDITION RELEASED" />
-              <h1 className="text-6xl md:text-8xl font-display leading-[0.9] tracking-tighter text-black">
-                YOUR AI'S
-                <br />
-                <span className="text-[var(--color-primary)] text-stroke text-transparent" style={{ WebkitTextStroke: '3px black', color: 'var(--color-primary)' }}>SECOND BRAIN</span>
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <div className="space-y-8">
+              <HextechBadge>V3.0 HEXTECH EDITION</HextechBadge>
+              <h1 className="text-6xl md:text-8xl font-display font-bold leading-none text-white tracking-tighter">
+                YOUR AI'S <br/>
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-emerald-400 to-primary bg-[length:200%_auto] animate-[gradient_3s_linear_infinite] drop-shadow-[0_0_15px_rgba(57,255,20,0.5)]">
+                  SECOND BRAIN
+                </span>
               </h1>
-              <p className="text-xl font-mono border-l-4 border-black pl-6 leading-relaxed">
-                Autonomous coding agent that absorbs Claude Code's power. 
-                <br/>
-                <strong>Free to use. Infinite context. Zero amnesia.</strong>
+              <p className="text-xl text-gray-400 font-mono max-w-xl border-l-2 border-primary pl-6 py-2 relative">
+                <span className="absolute top-0 left-0 w-2 h-2 bg-primary -translate-x-[5px] -translate-y-[4px]"></span>
+                <span className="absolute bottom-0 left-0 w-2 h-2 bg-primary -translate-x-[5px] translate-y-[4px]"></span>
+                Autonomous coding agent that absorbs Claude Code's power. <br/>
+                <strong className="text-white">Free to use. Infinite context. Zero amnesia.</strong>
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4 pt-4">
                 <div className="relative group w-full sm:w-auto">
-                  <div className="flex items-center bg-black border-4 border-black p-1 pr-4 shadow-[6px_6px_0px_0px_var(--color-primary)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[4px_4px_0px_0px_var(--color-primary)] transition-all cursor-pointer" onClick={copyCommand}>
-                    <span className="px-4 py-3 font-mono text-[var(--color-primary)] font-bold select-all">
+                  <div className="absolute -inset-1 bg-gradient-to-r from-primary to-emerald-600 rounded-none blur opacity-25 group-hover:opacity-75 transition duration-1000 group-hover:duration-200"></div>
+                  <div className="relative flex items-center bg-black border border-primary/50 p-1 pr-2 clip-path-polygon-[10px_0,100%_0,100%_calc(100%-10px),calc(100%-10px)_100%,0_100%,0_10px]">
+                    <code className="flex-1 font-mono text-primary px-4 py-3 bg-black/50">
                       $ npm install -g memory-factory
-                    </span>
-                    <button className="ml-2 p-2 text-white hover:text-[var(--color-primary)] transition-colors">
+                    </code>
+                    <button 
+                      onClick={copyCommand}
+                      className="p-3 hover:bg-primary/20 text-primary transition-colors"
+                    >
                       {copied ? <Check size={20} /> : <Copy size={20} />}
                     </button>
                   </div>
                 </div>
-                <a href="https://github.com/MadKangYu/conversation-memory-v2" target="_blank" className="btn-neo flex items-center justify-center gap-2 bg-white hover:bg-gray-100">
-                  <Github size={20} /> VIEW SOURCE
-                </a>
+                <HextechButton className="flex items-center justify-center gap-2 w-full sm:w-auto">
+                  <Github size={20} />
+                  VIEW SOURCE
+                </HextechButton>
               </div>
             </div>
 
-            {/* Interactive Terminal */}
-            <div className="lg:w-1/2 w-full">
-              <div className="bg-black border-4 border-black shadow-[12px_12px_0px_0px_var(--color-primary)] p-0 overflow-hidden">
-                <div className="bg-[var(--color-primary)] px-4 py-3 flex items-center justify-between border-b-4 border-black">
-                  <span className="font-bold text-black font-mono text-lg">TERMINAL_V2.exe</span>
+            {/* Terminal Demo */}
+            <div className="relative group">
+              <div className="absolute -inset-1 bg-primary/20 blur-xl rounded-full opacity-50 animate-pulse group-hover:opacity-80 transition-opacity"></div>
+              {/* Hextech Frame */}
+              <div className="absolute -inset-[2px] border border-primary/30 clip-path-polygon-[20px_0,100%_0,100%_calc(100%-20px),calc(100%-20px)_100%,0_100%,0_20px]"></div>
+              
+              <div className="box-hextech bg-black p-0 overflow-hidden h-[400px] flex flex-col relative z-10">
+                <div className="bg-primary/20 p-3 flex items-center justify-between border-b border-primary/30">
+                  <span className="font-mono text-xs text-primary font-bold flex items-center gap-2">
+                    <Terminal size={12} />
+                    TERMINAL_V2.exe
+                  </span>
                   <div className="flex gap-2">
-                    <div className="w-4 h-4 bg-black rounded-full border-2 border-white"></div>
-                    <div className="w-4 h-4 bg-black rounded-full border-2 border-white"></div>
+                    <div className="w-3 h-3 rounded-full bg-primary/50 animate-pulse"></div>
+                    <div className="w-3 h-3 rounded-full bg-primary/50"></div>
                   </div>
                 </div>
-                <div className="p-6 font-mono text-sm h-[400px] flex flex-col bg-[#0c0c0c]">
-                  <div className="flex-1 space-y-3 text-[var(--color-primary)] font-bold">
-                    {terminalLines.map((line, i) => (
-                      <div key={i}>{line}</div>
-                    ))}
-                    <div className="flex items-center gap-2 text-white">
-                      <span>Forge&gt;</span>
-                      <span className="w-3 h-5 bg-[var(--color-primary)] animate-pulse"></span>
+                <div className="p-6 font-mono text-sm space-y-2 flex-1 overflow-hidden relative">
+                  {terminalLines.map((line, i) => (
+                    <div key={i} className="text-primary/80 animate-in fade-in slide-in-from-left-2 duration-300">
+                      {line}
                     </div>
+                  ))}
+                  <div className="flex items-center gap-2 text-white mt-4">
+                    <span className="text-primary">Forge&gt;</span>
+                    <span className="w-3 h-5 bg-primary animate-pulse"></span>
                   </div>
-                  <div className="mt-4 pt-4 border-t-2 border-gray-800 text-gray-500 text-xs flex justify-between font-bold">
-                    <span>CPU: 12%</span>
-                    <span>MEM: 1024TB</span>
-                    <span>STATUS: ONLINE</span>
-                  </div>
+                  
+                  {/* Scanline Effect */}
+                  <div className="absolute inset-0 pointer-events-none bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] z-10 bg-[length:100%_2px,3px_100%]"></div>
+                </div>
+                <div className="p-2 bg-primary/10 border-t border-primary/30 flex justify-between text-[10px] font-mono text-primary/60 uppercase">
+                  <span>CPU: 12%</span>
+                  <span>MEM: 1024TB</span>
+                  <span>STATUS: ONLINE</span>
                 </div>
               </div>
             </div>
@@ -137,99 +187,102 @@ export default function Home() {
         </section>
 
         {/* Marquee */}
-        <div className="bg-black text-[var(--color-primary)] py-6 overflow-hidden border-y-4 border-black mb-32 transform -rotate-1 shadow-[0px_10px_20px_rgba(0,0,0,0.1)]">
-          <div className="animate-[marquee_20s_linear_infinite] whitespace-nowrap font-display text-5xl font-bold flex gap-12 items-center">
-            <span>AUTONOMOUS CODING AGENT</span>
-            <Zap fill="currentColor" size={40} />
-            <span>NO API KEYS REQUIRED</span>
-            <Zap fill="currentColor" size={40} />
-            <span>LOCAL EXECUTION</span>
-            <Zap fill="currentColor" size={40} />
-            <span>INFINITE MEMORY</span>
-            <Zap fill="currentColor" size={40} />
-            <span>AUTONOMOUS CODING AGENT</span>
-            <Zap fill="currentColor" size={40} />
+        <div className="bg-primary text-black py-4 overflow-hidden border-y-4 border-black mb-32 relative">
+          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMiIgY3k9IjIiIHI9IjIiIGZpbGw9IiMwMDAiIGZpbGwtb3BhY2l0eT0iMC4xIi8+PC9zdmc+')] opacity-20"></div>
+          <div className="flex whitespace-nowrap animate-[marquee_20s_linear_infinite] font-display font-bold text-4xl tracking-widest">
+            <span className="mx-8">AUTONOMOUS CODING AGENT</span>
+            <span className="mx-8">///</span>
+            <span className="mx-8">NO API KEY REQUIRED</span>
+            <span className="mx-8">///</span>
+            <span className="mx-8">LOCAL EXECUTION</span>
+            <span className="mx-8">///</span>
+            <span className="mx-8">GEMINI 2.0 FLASH POWERED</span>
+            <span className="mx-8">///</span>
+            <span className="mx-8">AUTONOMOUS CODING AGENT</span>
+            <span className="mx-8">///</span>
+            <span className="mx-8">NO API KEY REQUIRED</span>
+            <span className="mx-8">///</span>
+            <span className="mx-8">LOCAL EXECUTION</span>
+            <span className="mx-8">///</span>
+            <span className="mx-8">GEMINI 2.0 FLASH POWERED</span>
           </div>
         </div>
 
         {/* Features Grid */}
         <section id="features" className="container mx-auto px-6 mb-32">
-          <div className="flex items-end justify-between mb-16 border-b-4 border-black pb-6">
-            <h2 className="text-6xl font-display text-black">
-              SYSTEM <span className="text-[var(--color-primary)]">MODULES</span>
+          <div className="flex items-end justify-between mb-16 border-b border-primary/30 pb-4 relative">
+            <div className="absolute bottom-0 left-0 w-full h-[1px] bg-primary/30"></div>
+            <div className="absolute bottom-0 left-0 w-1/3 h-[2px] bg-primary"></div>
+            <h2 className="text-4xl md:text-5xl font-display font-bold text-white">
+              SYSTEM <span className="text-primary">MODULES</span>
             </h2>
-            <span className="font-mono font-bold bg-black text-white px-4 py-2 hidden md:block transform rotate-2">v2.0.4-beta</span>
+            <span className="font-mono text-primary/60 hidden md:block">v3.0.1-beta</span>
           </div>
           
           <div className="grid md:grid-cols-3 gap-8">
-            <NeoCard className="bg-white">
-              <div className="w-16 h-16 bg-black flex items-center justify-center mb-6 border-2 border-black shadow-[4px_4px_0px_0px_var(--color-primary)]">
-                <Cpu className="w-8 h-8 text-[var(--color-primary)]" />
-              </div>
-              <h3 className="text-3xl font-bold mb-4">AGENT CORE</h3>
-              <p className="font-mono text-sm leading-relaxed text-gray-700 font-medium">
-                Powered by Gemini 2.0 Flash. 1M context window absorbs your entire codebase instantly.
-                It thinks, plans, and executes like a senior engineer on caffeine.
-              </p>
-            </NeoCard>
-
-            <NeoCard className="bg-[var(--color-primary)]">
-              <div className="w-16 h-16 bg-black flex items-center justify-center mb-6 border-2 border-black shadow-[4px_4px_0px_0px_white]">
-                <Terminal className="w-8 h-8 text-white" />
-              </div>
-              <h3 className="text-3xl font-bold mb-4">HIDDEN SYSTEM</h3>
-              <p className="font-mono text-sm leading-relaxed text-black font-bold">
-                A completely isolated environment (.forge) that keeps your main directory clean.
-                It manages its own database, logs, and configuration in the shadows.
-              </p>
-            </NeoCard>
-
-            <NeoCard className="bg-white">
-              <div className="w-16 h-16 bg-black flex items-center justify-center mb-6 border-2 border-black shadow-[4px_4px_0px_0px_var(--color-primary)]">
-                <Brain className="w-8 h-8 text-[var(--color-primary)]" />
-              </div>
-              <h3 className="text-3xl font-bold mb-4">THE GARDEN</h3>
-              <p className="font-mono text-sm leading-relaxed text-gray-700 font-medium">
-                Knowledge graph that grows with every interaction. It remembers your preferences,
-                past bugs, and architectural decisions forever.
-              </p>
-            </NeoCard>
+            <FeatureCard 
+              icon={<Brain size={32} />}
+              title="Agent Core"
+              description="Powered by Gemini 2.0 Flash. ReAct loop architecture that thinks, plans, and executes code modifications autonomously."
+            />
+            <FeatureCard 
+              icon={<Cpu size={32} />}
+              title="Hidden System"
+              description="Isolated .forge environment. Keeps your project clean while maintaining persistent memory and configuration."
+            />
+            <FeatureCard 
+              icon={<Zap size={32} />}
+              title="The Garden"
+              description="Advanced memory management system. Grows with your project, remembering context and user preferences forever."
+            />
           </div>
         </section>
 
-        {/* CTA */}
+        {/* CTA Section */}
         <section className="container mx-auto px-6 text-center">
-          <div className="box-neo bg-black p-20 relative overflow-hidden">
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--color-primary)_0%,_transparent_70%)] opacity-20"></div>
-            <h2 className="text-5xl md:text-7xl font-display text-white mb-8 relative z-10">
-              READY TO <span className="text-[var(--color-primary)]">BUILD?</span>
-            </h2>
-            <p className="text-gray-300 font-mono text-xl mb-12 max-w-2xl mx-auto relative z-10 font-bold">
-              Join the revolution. Install The Forge and let your AI agent take over the boring parts.
-            </p>
-            <a href="https://github.com/MadKangYu/conversation-memory-v2" target="_blank" className="inline-block bg-[var(--color-primary)] text-black border-4 border-white px-10 py-5 font-display text-2xl hover:scale-105 transition-transform shadow-[8px_8px_0px_0px_white] relative z-10 font-bold uppercase">
-              Start The Forge
-            </a>
+          <div className="relative p-16 overflow-hidden group">
+            <div className="absolute inset-0 border-2 border-primary/30 clip-path-polygon-[20px_0,100%_0,100%_calc(100%-20px),calc(100%-20px)_100%,0_100%,0_20px]"></div>
+            <div className="absolute inset-0 bg-primary/5 group-hover:bg-primary/10 transition-colors duration-500"></div>
+            
+            {/* Animated Circuit Lines */}
+            <div className="absolute top-0 left-1/4 w-[1px] h-full bg-gradient-to-b from-transparent via-primary/50 to-transparent animate-[slideDown_3s_linear_infinite]"></div>
+            <div className="absolute top-0 right-1/4 w-[1px] h-full bg-gradient-to-b from-transparent via-primary/50 to-transparent animate-[slideDown_4s_linear_infinite]"></div>
+
+            <div className="relative z-10 space-y-8">
+              <h2 className="text-5xl md:text-7xl font-display font-bold text-white tracking-tighter">
+                READY TO <span className="text-primary animate-pulse">FORGE</span>?
+              </h2>
+              <p className="text-xl text-gray-400 font-mono max-w-2xl mx-auto">
+                Join the revolution of autonomous local development. <br/>
+                No subscription. No limits. Just pure code.
+              </p>
+              <div className="pt-8">
+                <HextechButton className="text-xl px-12 py-6" onClick={copyCommand}>
+                  INITIALIZE SYSTEM
+                </HextechButton>
+              </div>
+            </div>
           </div>
         </section>
       </main>
 
       {/* Footer */}
-      <footer className="border-t-4 border-black bg-white py-12">
-        <div className="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 bg-black flex items-center justify-center text-white font-bold text-lg">
-              {">_"}
+      <footer className="border-t border-primary/20 bg-black py-12 relative overflow-hidden">
+        <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-primary to-transparent"></div>
+        <div className="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6 relative z-10">
+          <div className="flex items-center gap-2">
+            <div className="w-6 h-6 bg-primary/20 border border-primary flex items-center justify-center text-[10px] text-primary clip-path-polygon-[5px_0,100%_0,100%_calc(100%-5px),calc(100%-5px)_100%,0_100%,0_5px]">
+              F
             </div>
-            <span className="font-mono font-bold">© 2026 THE FORGE.</span>
+            <span className="font-display font-bold text-white tracking-widest">THE FORGE</span>
+          </div>
+          <div className="font-mono text-xs text-gray-500">
+            &copy; 2026 MANUS AI. ALL RIGHTS RESERVED.
           </div>
           <div className="flex gap-6">
-            <a href="https://github.com/MadKangYu/conversation-memory-v2" className="text-black hover:text-[var(--color-primary)] transition-colors transform hover:scale-110">
-              <Github size={28} />
-            </a>
-            <a href="#" className="text-black hover:text-[var(--color-primary)] transition-colors transform hover:scale-110">
-              <ExternalLink size={28} />
-            </a>
+            <a href="https://github.com/MadKangYu/conversation-memory-v2" className="text-gray-500 hover:text-primary transition-colors">GITHUB</a>
+            <a href="#" className="text-gray-500 hover:text-primary transition-colors">DOCS</a>
+            <a href="#" className="text-gray-500 hover:text-primary transition-colors">DISCORD</a>
           </div>
         </div>
       </footer>
