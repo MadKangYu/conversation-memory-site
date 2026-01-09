@@ -116,11 +116,11 @@ export default function Home() {
 
           <GlassCard>
             <div className="h-12 w-12 rounded-lg bg-purple-500/10 flex items-center justify-center text-purple-400 mb-6">
-              <Cpu className="h-6 w-6" />
+              <Database className="h-6 w-6" />
             </div>
-            <h3 className="font-display text-xl font-bold mb-3">InstantCompressor V3</h3>
+            <h3 className="font-display text-xl font-bold mb-3">Robust Persistence</h3>
             <p className="text-muted-foreground text-sm leading-relaxed">
-              Our proprietary algorithm intelligently removes redundancy while preserving key facts, reducing context window pressure by up to 70%.
+              Powered by <strong>SQLite WAL mode</strong> for high-concurrency performance. Your memories are safe, even if the agent crashes.
             </p>
           </GlassCard>
 
@@ -128,9 +128,9 @@ export default function Home() {
             <div className="h-12 w-12 rounded-lg bg-pink-500/10 flex items-center justify-center text-pink-400 mb-6">
               <Zap className="h-6 w-6" />
             </div>
-            <h3 className="font-display text-xl font-bold mb-3">Zero Latency Injection</h3>
+            <h3 className="font-display text-xl font-bold mb-3">Secure & Isolated</h3>
             <p className="text-muted-foreground text-sm leading-relaxed">
-              Compressed memories are injected into the context stream in under 50ms, ensuring your agent's response time remains snappy.
+              Runs in a secure sandbox with <strong>API Key stripping</strong>. Your credentials never leak to the background process.
             </p>
           </GlassCard>
         </div>
@@ -196,7 +196,8 @@ export default function Home() {
               Uses a daemon process and <code className="text-xs bg-white/10 px-1 py-0.5 rounded">settings.json</code> hooks to provide robust background memory management.
             </p>
             <div className="w-full bg-black/50 rounded-lg p-4 text-left font-mono text-xs text-muted-foreground">
-              <span className="text-green-400">$</span> memory-factory install --claude
+              <div className="mb-2 text-gray-500"># Auto-detects environment</div>
+              <span className="text-green-400">$</span> npx memory-factory install
             </div>
           </GlassCard>
 
@@ -209,7 +210,8 @@ export default function Home() {
               Leverages the native plugin system for a clean, all-in-one integration with zero external dependencies.
             </p>
             <div className="w-full bg-black/50 rounded-lg p-4 text-left font-mono text-xs text-muted-foreground">
-              <span className="text-green-400">$</span> memory-factory install --opencode
+              <div className="mb-2 text-gray-500"># Works with TS source or JS build</div>
+              <span className="text-green-400">$</span> npx memory-factory install
             </div>
           </GlassCard>
         </div>
